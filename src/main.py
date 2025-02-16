@@ -144,4 +144,3 @@ if __name__ == "__main__":
     app.connect("destroy", Gtk.main_quit)
     app.show_all()
     Gtk.main()
-    Gtk.main()
