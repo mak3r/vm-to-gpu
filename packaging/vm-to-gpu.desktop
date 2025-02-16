@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=VM to GPU
+Exec=/usr/local/bin/vm-to-gpu
+Icon=computer
+Type=Application
+Categories=System;
+StartupNotify=false
