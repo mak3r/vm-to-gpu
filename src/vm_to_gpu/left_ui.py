@@ -20,7 +20,7 @@ class LeftUI(Gtk.Box):
         # self.load_config_list()
 
         config_scroll = Gtk.ScrolledWindow()
-        config_scroll.set_size_request(200, -1)
+        #config_scroll.set_size_request(200, -1)
         config_scroll.add(self.config_treeview)
         self.pack_start(config_scroll, False, False, 0)
         

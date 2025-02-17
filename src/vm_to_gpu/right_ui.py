@@ -39,7 +39,7 @@ class RightUI(Gtk.Box):
         # self.pack_start(label, True, True, 0)
 
     def get_lsusb_devices(self):
-        result = subprocess.run(["lsusb"], capture_output=True, text=True)
+        result = subprocess.run(["lsusb", "-s", "001:"], capture_output=True, text=True)
         devices = []
         for line in result.stdout.splitlines():
             parts = line.split()
@@ -73,3 +73,6 @@ class RightUI(Gtk.Box):
     def update(self, config):
         # Update the right UI based on the shared configuration
         pass
+
+    def set_width(self, width):
+        self.set_size_request(width, -1)
