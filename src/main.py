@@ -76,7 +76,7 @@ class VMToGPUApp(Gtk.Window):
             self.right_ui.set_width(right_ui_width)
 
             # Refresh the UI components
-            self.left_ui.update(self.config)
+            self.left_ui.update()
             self.right_ui.update(self.config)
 
             self.curw = ui_width
