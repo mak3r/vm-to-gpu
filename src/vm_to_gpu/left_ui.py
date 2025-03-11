@@ -3,7 +3,6 @@ import json
 import os
 import pprint
 import subprocess
-import sys
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
