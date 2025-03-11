@@ -18,7 +18,15 @@ rpm:
 	tar -czf rpmbuild/SOURCES/$(APPNAME)-$(VERSION).tar.gz --transform "s,^,$(APPNAME)-$(VERSION)/," src packaging
 	rpmbuild -bb --define "_version $(VERSION)" --define "_topdir `pwd`/rpmbuild" packaging/$(APPNAME).spec
 
+container:
+	podman build -t claude-code:$(APPNAME) .
+	podman volume create vm-to-gpu_volume
+
+code-ai:
+	podman run --rm -it -v vm-to-gpu_volume:/app claude-code:$(APPNAME)
+
 clean:
 	rm -rf rpmbuild/*
+
 
 .PHONY: all install uninstall rpm clean
