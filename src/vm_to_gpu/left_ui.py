@@ -26,16 +26,22 @@ class LeftUI(Gtk.Box):
         self.config_treeview = Gtk.TreeView(model=self.config_liststore)
         renderer = Gtk.CellRendererText()
         column = Gtk.TreeViewColumn("Configurations", renderer, text=0)
+        column.set_sizing(Gtk.TreeViewColumnSizing.AUTOSIZE)  # Auto-size column
+        column.set_resizable(True)  # Allow resizing
+        column.set_min_width(100)  # Set minimum width
         self.config_treeview.append_column(column)
 
         self.load_config_list()
 
         config_scroll = Gtk.ScrolledWindow()
-        #config_scroll.set_size_request(200, -1)
+        config_scroll.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
+        config_scroll.set_min_content_height(200)  # Set minimum height
         config_scroll.add(self.config_treeview)
-        self.pack_start(config_scroll, False, False, 0)
+        self.pack_start(config_scroll, True, True, 0)  # Allow expansion
 
         self.config_treeview.connect("row-activated", self.on_domain_selected)
+        # Make sure TreeView is visible
+        self.config_treeview.show_all()
 
     def load_config_list(self):
         self.config_liststore.clear()
@@ -66,13 +72,17 @@ class LeftUI(Gtk.Box):
         result = subprocess.run(["sudo", "virsh", "list", "--all"], capture_output=True, text=True)
         domains = []
         lines = result.stdout.splitlines()
+        
         for line in lines[2:]:  # Skip the header lines
             parts = line.split()
-            if parts and parts[0].isdigit():
-                print("Domain: ", parts[1], " is running")
-            elif parts and parts[0] == "-":
-                print("Domain: ", parts[1], " is not running")
-            if len(parts) > 2:
+            
+            # Make sure we have at least two parts (ID and name)
+            if parts and len(parts) >= 2:
+                if parts[0].isdigit():
+                    print("Domain: ", parts[1], " is running")
+                elif parts[0] == "-":
+                    print("Domain: ", parts[1], " is not running")
+                # Add domain regardless of state (running or not)
                 domains.append({"name": parts[1], "selectable": True})
 
         return domains
