@@ -15,7 +15,7 @@ uninstall:
 	@echo "Uninstallation complete."
 
 rpm:
-	mkdir -p 'rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}'
+	mkdir -p rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
 	tar -czf rpmbuild/SOURCES/$(APPNAME)-$(VERSION).tar.gz --transform "s,^,$(APPNAME)-$(VERSION)/," src packaging
 	rpmbuild -bb --define "_version $(VERSION)" --define "_topdir `pwd`/rpmbuild" packaging/$(APPNAME).spec
 
