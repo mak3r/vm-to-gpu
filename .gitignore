@@ -6,7 +6,6 @@ __pycache__/
 *.rpm
 build/
 dist/
-*.spec
 
 rpmbuild/
 *.tar.gz

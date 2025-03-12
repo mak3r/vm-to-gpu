@@ -1,3 +1,4 @@
+SHELL=/bin/bash
 BUILDDIR=rpmbuild/RPMS/noarch
 APPNAME=vm-to-gpu
 VERSION=1.0
@@ -5,7 +6,7 @@ VERSION=1.0
 all:
 	@echo "Run 'make install' to install the application."
 
-install: rpm
+install: 
 	rpm -i $(BUILDDIR)/$(APPNAME)-$(VERSION)-1.noarch.rpm
 	@echo "Installation complete."
 
@@ -20,10 +21,11 @@ rpm:
 
 container:
 	podman build -t claude-code:$(APPNAME) .
-	podman volume create vm-to-gpu_volume
+	- podman volume create vm-to-gpu_volume
 
-code-ai:
-	podman run --rm -it -v vm-to-gpu_volume:/app claude-code:$(APPNAME)
+code-ai: container
+	podman run --rm -it -v vm-to-gpu_volume:/app --mount type=bind,src=rpmbuild,dst=/app/vm-to-gpu/rpmbuild \
+	claude-code:$(APPNAME)
 
 clean:
 	rm -rf rpmbuild/*
