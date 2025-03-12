@@ -11,7 +11,5 @@ RUN git clone --single-branch --branch claude-code https://github.com/mak3r/vm-t
 
 WORKDIR /app/vm-to-gpu
 
-COPY packaging/vm-to-gpu.spec /app/vm-to-gpu/packaging/vm-to-gpu.spec
-
 ENTRYPOINT [ "/bin/bash" ]
 

@@ -24,7 +24,8 @@ container:
 	- podman volume create vm-to-gpu_volume
 
 code-ai: container
-	podman run --rm -it -v vm-to-gpu_volume:/app -v run:/usr/local/bin/ claude-code:$(APPNAME)
+	podman run --rm -it -v vm-to-gpu_volume:/app -v run:/usr/local/bin/ \
+	claude-code:$(APPNAME)
 
 clean:
 	rm -rf rpmbuild/*
